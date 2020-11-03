@@ -7,9 +7,9 @@ using server.Models;
 
 namespace server.Data
 {
-    public class FemoInspoDbContext : DbContext
+    public class FinspoDbContext : DbContext
     {
-        public FemoInspoDbContext(DbContextOptions<FemoInspoDbContext> options) : base(options)
+        public FinspoDbContext(DbContextOptions<FinspoDbContext> options) : base(options)
         {
             
         }
