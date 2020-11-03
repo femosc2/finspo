@@ -26,6 +26,7 @@ namespace server
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddSwaggerGen();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -36,9 +37,16 @@ namespace server
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseSwagger();
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseSwaggerUI(c => {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "finspo v1");
+                c.RoutePrefix = string.Empty;
+            });
 
             app.UseAuthorization();
 
@@ -46,6 +54,7 @@ namespace server
             {
                 endpoints.MapControllers();
             });
+
         }
     }
 }
