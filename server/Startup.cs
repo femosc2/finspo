@@ -31,7 +31,7 @@ namespace server
             services.AddControllers();
             services.AddSwaggerGen();
             services.AddDbContext<FinspoDbContext>(option => option.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=FinspoDB;"));
-            // services.AddDbContext<FinspoDbContext>(option => option.UseSqlServer(@"Server = tcp:finspo.database.windows.net,1433; Initial Catalog = FinspoDB; Persist Security Info = False; User ID = finspoAdmin; Password = ''; MultipleActiveResultSets = False; Encrypt = True; TrustServerCertificate = False; Connection Timeout = 30;"));
+            // services.AddDbContext<FinspoDbContext>(option => option.UseSqlServer(@"Server = tcp:finspo.database.windows.net,1433; Initial Catalog = FinspoDB; Persist Security Info = False; User ID = finspoAdmin; Password = ''''''''; MultipleActiveResultSets = False; Encrypt = True; TrustServerCertificate = False; Connection Timeout = 30;"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
