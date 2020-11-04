@@ -16,7 +16,6 @@ namespace server.Models
         public string Link { get; set; }
         [Required]
         public string Source { get; set; }
-        [Required]
         public int Year { get; set; }
     }
 }

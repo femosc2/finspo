@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -46,10 +47,87 @@ namespace server.Controllers
 
         // GET api/<InspoController>/5
         [HttpGet("{id}")]
-        public Fashion Get(int id)
+        public IActionResult Get(int id)
         {
-            var result = _finspoDbContext.Fashion.Find(id);
-            return result;
+            return Ok(_finspoDbContext.Fashion.Find(id));
+        }
+
+        [HttpGet("GetWhichIncludeBrand/{brand}")]
+        public IActionResult GetWhichIncludeBrand(string brand)
+        {
+            var clothes =_finspoDbContext.Clothing.Where(c => c.Brand.ToLower() == brand.ToLower()).ToList();
+            List<Fashion> fashion = new List<Fashion>();
+            foreach (var c in clothes)
+            {
+                foreach (var f in _finspoDbContext.Fashion.ToList())
+                {
+                    if (f.Id == c.FashionId)
+                    {
+                        Fashion newFashion = new Fashion
+                        {
+                            Id = f.Id,
+                            Title = f.Title,
+                            Items = _finspoDbContext.Clothing.Where(c => c.FashionId == f.Id).ToList(),
+                            Link = f.Link,
+                            Source = f.Source
+                        };
+                        fashion.Add(newFashion);
+                    }
+                }
+            }
+            return Ok(fashion);
+        }
+
+        [HttpGet("GetWhichIncludeColour/{colour}")]
+        public IActionResult GetWhichIncludeColour(string colour)
+        {
+            var clothes = _finspoDbContext.Clothing.Where(c => c.Colour.ToLower() == colour.ToLower()).ToList();
+            List<Fashion> fashion = new List<Fashion>();
+            foreach (var c in clothes)
+            {
+                foreach (var f in _finspoDbContext.Fashion.ToList())
+                {
+                    if (f.Id == c.FashionId)
+                    {
+                        Fashion newFashion = new Fashion
+                        {
+                            Id = f.Id,
+                            Title = f.Title,
+                            Items = _finspoDbContext.Clothing.Where(c => c.FashionId == f.Id).ToList(),
+                            Link = f.Link,
+                            Source = f.Source
+                        };
+                        fashion.Add(newFashion);
+                    }
+                }
+            }
+            return Ok(fashion);
+        }
+
+        [HttpGet("GetWhichIncludeCategory/{category}")]
+        public IActionResult GetWhichIncludeCategory(string category)
+        {
+            var clothes = _finspoDbContext.Clothing.Where(c => c.Category.ToLower() == category.ToLower()).ToList();
+            List<Fashion> fashion = new List<Fashion>();
+            foreach (var c in clothes)
+            {
+                foreach (var f in _finspoDbContext.Fashion.ToList())
+                {
+                    if (f.Id == c.FashionId)
+                    {
+                        Fashion newFashion = new Fashion
+                        {
+                            Id = f.Id,
+                            Title = f.Title,
+                            Items = _finspoDbContext.Clothing.Where(c => c.FashionId == f.Id).ToList(),
+                            Link = f.Link,
+                            Source = f.Source
+                        };
+                        fashion.Add(newFashion);
+                    }
+                }
+            }
+            return Ok(fashion);
         }
 
         // POST api/<InspoController>
@@ -62,19 +140,7 @@ namespace server.Controllers
             }
             _finspoDbContext.Fashion.Add(fashion);
             _finspoDbContext.SaveChanges();
-            return StatusCode(StatusCodes.Status201Created);
-        }
-
-        // PUT api/<InspoController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<InspoController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            return StatusCode(StatusCodes.Status201Created, fashion);
         }
     }
 }

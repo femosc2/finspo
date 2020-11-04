@@ -28,9 +28,9 @@ namespace server.Controllers
 
         // GET api/<ClothingController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult Get(int id)
         {
-            return "value";
+            return Ok(_finspoDbContext.Clothing.Where(c => c.FashionId == id).ToList());
         }
     }
 }

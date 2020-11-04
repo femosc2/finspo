@@ -10,7 +10,6 @@ namespace server.Models
 {
     public class Clothing
     {
-        [Required]
         public int Id { get; set; }
         [Required]
         public string Name { get; set; }
@@ -20,7 +19,6 @@ namespace server.Models
         public string Category { get; set; }
         [Required]
         public string Colour { get; set; }
-        [JsonIgnore]
         public int FashionId { get; set; }
 
     }
