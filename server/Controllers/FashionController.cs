@@ -132,8 +132,13 @@ namespace server.Controllers
 
         // POST api/<InspoController>
         [HttpPost]
-        public IActionResult Post([FromBody] Fashion fashion)
+        public IActionResult Post([FromBody] Fashion fashion, string key)
         {
+            if (!_finspoDbContext.AuthorizedUser.ToList().Any(au => au.Key == key))
+            {
+                return StatusCode(StatusCodes.Status401Unauthorized);
+            }
+
             foreach(Clothing item in fashion.Items)
             {
                 _finspoDbContext.Clothing.Add(item);

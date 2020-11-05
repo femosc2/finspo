@@ -16,5 +16,6 @@ namespace server.Data
         public DbSet<Fashion> Fashion { get; set; }
         public DbSet<Clothing> Clothing { get; set; }
         public DbSet<Media> Media { get; set; }
+        public DbSet<AuthorizedUser> AuthorizedUser { get; set; }
     }
 }

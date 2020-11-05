@@ -38,8 +38,12 @@ namespace server.Controllers
 
         // POST api/<MediaController>
         [HttpPost]
-        public IActionResult Post([FromBody] Media media)
+        public IActionResult Post([FromBody] Media media, string key)
         {
+            if (!_finspoDbContext.AuthorizedUser.ToList().Any(au => au.Key == key))
+            {
+                return StatusCode(StatusCodes.Status401Unauthorized);
+            }
             _finspoDbContext.Media.Add(media);
             _finspoDbContext.SaveChanges();
             return Ok(StatusCode(StatusCodes.Status201Created, media));
